@@ -1,8 +1,13 @@
 # 🎮 Gaming Setup Editor
 
+[![GitHub stars](https://img.shields.io/github/stars/LegionsX-Marius/Gaming-Image-Editor?style=social)](https://github.com/LegionsX-Marius/Gaming-Image-Editor)
+[![GitHub forks](https://img.shields.io/github/forks/LegionsX-Marius/Gaming-Image-Editor?style=social)](https://github.com/LegionsX-Marius/Gaming-Image-Editor/fork)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://LegionsX-Marius.github.io/Gaming-Image-Editor/)
+
 Un editor de imagini web simplu și puternic, optimizat pentru editarea setup-urilor gaming cu RGB lighting. Interfață modernă cu temă dark (roșu, alb, negru) și funcții avansate de editare.
 
-![Gaming Setup Editor](https://via.placeholder.com/800x400/0a0a0a/8B0000?text=Gaming+Setup+Editor)
+![Gaming Image Editor](img/Screenshot.png)
 
 ## ✨ Caracteristici
 
@@ -36,14 +41,20 @@ Un editor de imagini web simplu și puternic, optimizat pentru editarea setup-ur
 - **Logo personalizabil** - Suport pentru logo propriu
 - **Resetare automată** - Setările se resetează la original când încarci o imagine nouă
 
+## 🌐 Demo Live
+
+**[👉 Încearcă editorul acum!](https://LegionsX-Marius.github.io/Gaming-Image-Editor/)**
+
+Fără instalare, fără înregistrare - doar deschide și începe să editezi!
+
 ## 🚀 Instalare și Utilizare
 
 ### 📦 Instalare pe GitHub Pages
 
 1. **Fork sau Clone repository-ul**
 ```bash
-git clone https://github.com/username/gaming-setup-editor.git
-cd gaming-setup-editor
+git clone https://github.com/LegionsX-Marius/Gaming-Image-Editor
+cd gaming-image-editor
 ```
 
 2. **Structura de foldere**
@@ -59,7 +70,7 @@ gaming-setup-editor/
    - Mergi la **Settings** → **Pages**
    - La **Source**, alege `main` branch și folder `/ (root)`
    - Click pe **Save**
-   - Site-ul va fi live la: `https://username.github.io/gaming-setup-editor/`
+   - Site-ul va fi live la: `https://legionsx-marius.github.io/Gaming-Image-Editor/`
 
 ### 🎨 Personalizare Logo
 
