@@ -194,9 +194,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid rgba(255, 0, 0, 0.2);
+            border: 1px solid rgba(139, 0, 0, 0.2);
             min-height: 500px;
             box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
+            position: relative;
         }
 
         canvas {
@@ -204,6 +205,7 @@
             height: auto;
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
+            cursor: crosshair;
         }
 
         .filter-buttons {
@@ -217,6 +219,115 @@
             padding: 10px;
             font-size: 0.9em;
         }
+
+        .watermark-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .watermark-controls input[type="text"],
+        .watermark-controls input[type="number"],
+        .watermark-controls select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            background: rgba(30, 30, 30, 0.8);
+            color: #fff;
+            font-size: 0.9em;
+        }
+
+        .watermark-controls input[type="color"] {
+            width: 100%;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .crop-mode {
+            background: rgba(139, 0, 0, 0.1);
+            border: 2px solid #8B0000;
+        }
+
+        .crop-info {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(139, 0, 0, 0.9);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            z-index: 10;
+        }
+
+        .toggle-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #8B0000;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .section-header {
+            color: #8B0000;
+            font-size: 1.1em;
+            font-weight: 700;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(139, 0, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
@@ -228,6 +339,8 @@
         </h1>
         
         <div class="controls">
+            <div class="section-header">⚙️ Setări de Bază</div>
+
             <div class="control-group">
                 <label>Rotație: <span class="value-display" id="rotationValue">-90°</span></label>
                 <input type="range" id="rotation" min="-180" max="180" value="-90" step="1">
@@ -248,9 +361,16 @@
                 <input type="range" id="saturation" min="0" max="200" value="100" step="1">
             </div>
 
+            <div class="section-header">✨ Efecte Speciale</div>
+
             <div class="control-group">
                 <label>Claritate: <span class="value-display" id="sharpnessValue">0</span></label>
                 <input type="range" id="sharpness" min="0" max="100" value="0" step="1">
+            </div>
+
+            <div class="control-group">
+                <label>Blur: <span class="value-display" id="blurValue">0</span></label>
+                <input type="range" id="blur" min="0" max="20" value="0" step="1">
             </div>
 
             <div class="control-group">
@@ -264,7 +384,35 @@
             </div>
 
             <div class="control-group">
-                <label>Filtre Predefinite:</label>
+                <label>Glitch Effect: <span class="value-display" id="glitchValue">0</span></label>
+                <input type="range" id="glitch" min="0" max="100" value="0" step="1">
+            </div>
+
+            <div class="control-group">
+                <label>Neon Glow: <span class="value-display" id="neonValue">0</span></label>
+                <input type="range" id="neon" min="0" max="100" value="0" step="1">
+            </div>
+
+            <div class="section-header">🎨 Filtre RGB Gaming</div>
+
+            <div class="control-group">
+                <label>Red Boost: <span class="value-display" id="redBoostValue">0</span></label>
+                <input type="range" id="redBoost" min="-50" max="50" value="0" step="1">
+            </div>
+
+            <div class="control-group">
+                <label>Green Boost: <span class="value-display" id="greenBoostValue">0</span></label>
+                <input type="range" id="greenBoost" min="-50" max="50" value="0" step="1">
+            </div>
+
+            <div class="control-group">
+                <label>Blue Boost: <span class="value-display" id="blueBoostValue">0</span></label>
+                <input type="range" id="blueBoost" min="-50" max="50" value="0" step="1">
+            </div>
+
+            <div class="section-header">🎭 Filtre Predefinite</div>
+
+            <div class="control-group">
                 <div class="filter-buttons">
                     <button onclick="applyPreset('gaming')">Gaming</button>
                     <button onclick="applyPreset('cinematic')">Cinematic</button>
@@ -273,6 +421,55 @@
                     <button onclick="applyPreset('warm')">Warm</button>
                     <button onclick="applyPreset('noir')">Noir</button>
                     <button onclick="applyPreset('cartoon')">Cartoon</button>
+                    <button onclick="applyPreset('retro')">Retro</button>
+                    <button onclick="applyPreset('glitch')">Glitch</button>
+                    <button onclick="applyPreset('neon')">Neon</button>
+                    <button onclick="applyPreset('rgb')">RGB Boost</button>
+                </div>
+            </div>
+
+            <div class="section-header">✂️ Crop Tool</div>
+
+            <div class="control-group">
+                <div class="toggle-section">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="cropToggle" onchange="toggleCropMode()">
+                        <span class="slider"></span>
+                    </label>
+                    <label style="color: #fff; margin: 0;">Activează Crop Mode</label>
+                </div>
+                <p style="font-size: 0.85em; color: rgba(255,255,255,0.6); margin-top: 8px;">
+                    Click și trage pe imagine pentru a selecta zona de crop
+                </p>
+                <div class="buttons" style="margin-top: 15px;">
+                    <button onclick="applyCrop()" id="cropBtn" style="display: none;">✂️ Aplică Crop</button>
+                    <button onclick="cancelCrop()" id="cancelCropBtn" style="display: none;">❌ Anulează</button>
+                </div>
+            </div>
+
+            <div class="section-header">💧 Text Watermark</div>
+
+            <div class="control-group">
+                <div class="toggle-section">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="watermarkToggle" onchange="toggleWatermark()">
+                        <span class="slider"></span>
+                    </label>
+                    <label style="color: #fff; margin: 0;">Activează Watermark</label>
+                </div>
+                <div class="watermark-controls" id="watermarkControls" style="display: none;">
+                    <input type="text" id="watermarkText" placeholder="Textul tău aici..." oninput="updateCanvas()">
+                    <input type="number" id="watermarkSize" placeholder="Mărime font" value="40" min="10" max="200" oninput="updateCanvas()">
+                    <input type="color" id="watermarkColor" value="#ffffff" oninput="updateCanvas()">
+                    <select id="watermarkPosition" onchange="updateCanvas()">
+                        <option value="bottomRight">Jos Dreapta</option>
+                        <option value="bottomLeft">Jos Stânga</option>
+                        <option value="topRight">Sus Dreapta</option>
+                        <option value="topLeft">Sus Stânga</option>
+                        <option value="center">Centru</option>
+                    </select>
+                    <input type="range" id="watermarkOpacity" min="0" max="100" value="80" oninput="document.getElementById('watermarkOpacityValue').textContent = this.value + '%'; updateCanvas()">
+                    <label style="color: #fff; font-size: 0.9em;">Opacitate: <span id="watermarkOpacityValue">80%</span></label>
                 </div>
             </div>
 
@@ -291,7 +488,7 @@
             </div>
         </div>
 
-        <div class="canvas-container">
+        <div class="canvas-container" id="canvasContainer">
             <canvas id="canvas"></canvas>
         </div>
     </div>
@@ -309,18 +506,29 @@
         let currentSharpness = 0;
         let currentCartoon = 0;
         let currentVignette = 0;
+        let currentBlur = 0;
+        let currentGlitch = 0;
+        let currentNeon = 0;
+        let currentRedBoost = 0;
+        let currentGreenBoost = 0;
+        let currentBlueBoost = 0;
+        
+        // Crop variables
+        let cropMode = false;
+        let cropStart = null;
+        let cropEnd = null;
+        let cropRect = null;
 
         // Load the image
         img.onload = function() {
             originalImage = img;
-            // Reset la valorile originale când se încarcă o imagine nouă
             resetToOriginal();
             updateCanvas();
         };
         
         img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMmEyYTJhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iI2FhYSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+SW5jYXJjYSBpbWFnaW5lYSB0YS4uLjwvdGV4dD48L3N2Zz4=';
         
-        // Event listeners
+        // Event listeners for all controls
         document.getElementById('rotation').addEventListener('input', (e) => {
             currentRotation = parseInt(e.target.value);
             document.getElementById('rotationValue').textContent = currentRotation + '°';
@@ -351,6 +559,12 @@
             updateCanvas();
         });
 
+        document.getElementById('blur').addEventListener('input', (e) => {
+            currentBlur = parseInt(e.target.value);
+            document.getElementById('blurValue').textContent = currentBlur;
+            updateCanvas();
+        });
+
         document.getElementById('cartoon').addEventListener('input', (e) => {
             currentCartoon = parseInt(e.target.value);
             document.getElementById('cartoonValue').textContent = currentCartoon;
@@ -363,6 +577,36 @@
             updateCanvas();
         });
 
+        document.getElementById('glitch').addEventListener('input', (e) => {
+            currentGlitch = parseInt(e.target.value);
+            document.getElementById('glitchValue').textContent = currentGlitch;
+            updateCanvas();
+        });
+
+        document.getElementById('neon').addEventListener('input', (e) => {
+            currentNeon = parseInt(e.target.value);
+            document.getElementById('neonValue').textContent = currentNeon;
+            updateCanvas();
+        });
+
+        document.getElementById('redBoost').addEventListener('input', (e) => {
+            currentRedBoost = parseInt(e.target.value);
+            document.getElementById('redBoostValue').textContent = currentRedBoost;
+            updateCanvas();
+        });
+
+        document.getElementById('greenBoost').addEventListener('input', (e) => {
+            currentGreenBoost = parseInt(e.target.value);
+            document.getElementById('greenBoostValue').textContent = currentGreenBoost;
+            updateCanvas();
+        });
+
+        document.getElementById('blueBoost').addEventListener('input', (e) => {
+            currentBlueBoost = parseInt(e.target.value);
+            document.getElementById('blueBoostValue').textContent = currentBlueBoost;
+            updateCanvas();
+        });
+
         function resetToOriginal() {
             currentRotation = -90;
             currentBrightness = 100;
@@ -371,6 +615,12 @@
             currentSharpness = 0;
             currentCartoon = 0;
             currentVignette = 0;
+            currentBlur = 0;
+            currentGlitch = 0;
+            currentNeon = 0;
+            currentRedBoost = 0;
+            currentGreenBoost = 0;
+            currentBlueBoost = 0;
 
             document.getElementById('rotation').value = -90;
             document.getElementById('brightness').value = 100;
@@ -379,6 +629,12 @@
             document.getElementById('sharpness').value = 0;
             document.getElementById('cartoon').value = 0;
             document.getElementById('vignette').value = 0;
+            document.getElementById('blur').value = 0;
+            document.getElementById('glitch').value = 0;
+            document.getElementById('neon').value = 0;
+            document.getElementById('redBoost').value = 0;
+            document.getElementById('greenBoost').value = 0;
+            document.getElementById('blueBoost').value = 0;
 
             document.getElementById('rotationValue').textContent = '-90°';
             document.getElementById('brightnessValue').textContent = '100%';
@@ -387,6 +643,12 @@
             document.getElementById('sharpnessValue').textContent = '0';
             document.getElementById('cartoonValue').textContent = '0';
             document.getElementById('vignetteValue').textContent = '0';
+            document.getElementById('blurValue').textContent = '0';
+            document.getElementById('glitchValue').textContent = '0';
+            document.getElementById('neonValue').textContent = '0';
+            document.getElementById('redBoostValue').textContent = '0';
+            document.getElementById('greenBoostValue').textContent = '0';
+            document.getElementById('blueBoostValue').textContent = '0';
         }
 
         function updateCanvas() {
@@ -394,8 +656,21 @@
 
             const angle = currentRotation * Math.PI / 180;
             
-            let w = originalImage.width;
-            let h = originalImage.height;
+            let sourceImg = originalImage;
+            let w = sourceImg.width;
+            let h = sourceImg.height;
+
+            // Apply crop if exists
+            if (cropRect) {
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = cropRect.width;
+                tempCanvas.height = cropRect.height;
+                const tempCtx = tempCanvas.getContext('2d');
+                tempCtx.drawImage(originalImage, cropRect.x, cropRect.y, cropRect.width, cropRect.height, 0, 0, cropRect.width, cropRect.height);
+                sourceImg = tempCanvas;
+                w = cropRect.width;
+                h = cropRect.height;
+            }
             
             if (Math.abs(currentRotation) === 90 || Math.abs(currentRotation) === 270) {
                 canvas.width = h;
@@ -411,10 +686,19 @@
             ctx.translate(canvas.width / 2, canvas.height / 2);
             ctx.rotate(angle);
             
-            ctx.filter = `brightness(${currentBrightness}%) contrast(${currentContrast}%) saturate(${currentSaturation}%)`;
-            ctx.drawImage(originalImage, -w / 2, -h / 2, w, h);
+            let filterStr = `brightness(${currentBrightness}%) contrast(${currentContrast}%) saturate(${currentSaturation}%)`;
+            if (currentBlur > 0) {
+                filterStr += ` blur(${currentBlur}px)`;
+            }
+            ctx.filter = filterStr;
+            ctx.drawImage(sourceImg, -w / 2, -h / 2, w, h);
             
             ctx.restore();
+
+            // Apply RGB boosts
+            if (currentRedBoost !== 0 || currentGreenBoost !== 0 || currentBlueBoost !== 0) {
+                applyRGBBoost();
+            }
 
             if (currentSharpness > 0) {
                 applySharpness(currentSharpness / 100);
@@ -426,6 +710,24 @@
 
             if (currentVignette > 0) {
                 applyVignette(currentVignette / 100);
+            }
+
+            if (currentGlitch > 0) {
+                applyGlitchEffect(currentGlitch / 100);
+            }
+
+            if (currentNeon > 0) {
+                applyNeonEffect(currentNeon / 100);
+            }
+
+            // Apply watermark
+            if (document.getElementById('watermarkToggle').checked) {
+                applyWatermark();
+            }
+
+            // Draw crop selection
+            if (cropMode && cropStart && cropEnd) {
+                drawCropSelection();
             }
         }
 
@@ -470,19 +772,17 @@
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const pixels = imageData.data;
             
-            // Quantize colors pentru efect cartoon
             const levels = Math.max(2, Math.floor(8 - intensity * 5));
             const factor = 255 / levels;
             
             for (let i = 0; i < pixels.length; i += 4) {
-                pixels[i] = Math.round(pixels[i] / factor) * factor;     // R
-                pixels[i + 1] = Math.round(pixels[i + 1] / factor) * factor; // G
-                pixels[i + 2] = Math.round(pixels[i + 2] / factor) * factor; // B
+                pixels[i] = Math.round(pixels[i] / factor) * factor;
+                pixels[i + 1] = Math.round(pixels[i + 1] / factor) * factor;
+                pixels[i + 2] = Math.round(pixels[i + 2] / factor) * factor;
             }
             
             ctx.putImageData(imageData, 0, 0);
             
-            // Edge detection pentru contur
             if (intensity > 0.3) {
                 applyEdgeDetection(intensity);
             }
@@ -548,24 +848,299 @@
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     const vignette = 1 - (dist / maxDist) * intensity;
                     
-                    pixels[idx] *= vignette;     // R
-                    pixels[idx + 1] *= vignette; // G
-                    pixels[idx + 2] *= vignette; // B
+                    pixels[idx] *= vignette;
+                    pixels[idx + 1] *= vignette;
+                    pixels[idx + 2] *= vignette;
                 }
             }
             
             ctx.putImageData(imageData, 0, 0);
         }
 
+        function applyGlitchEffect(intensity) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            const glitchLines = Math.floor(intensity * 20);
+            
+            for (let i = 0; i < glitchLines; i++) {
+                const y = Math.floor(Math.random() * h);
+                const offset = Math.floor((Math.random() - 0.5) * w * intensity * 0.1);
+                const lineHeight = Math.floor(Math.random() * 5) + 1;
+                
+                for (let ly = 0; ly < lineHeight && y + ly < h; ly++) {
+                    for (let x = 0; x < w; x++) {
+                        const sourceX = Math.max(0, Math.min(w - 1, x - offset));
+                        const sourceIdx = ((y + ly) * w + sourceX) * 4;
+                        const targetIdx = ((y + ly) * w + x) * 4;
+                        
+                        pixels[targetIdx] = pixels[sourceIdx];
+                        pixels[targetIdx + 1] = pixels[sourceIdx + 1];
+                        pixels[targetIdx + 2] = pixels[sourceIdx + 2];
+                    }
+                }
+            }
+            
+            // RGB split effect
+            if (intensity > 0.3) {
+                const offset = Math.floor(intensity * 10);
+                for (let y = 0; y < h; y++) {
+                    for (let x = 0; x < w; x++) {
+                        const idx = (y * w + x) * 4;
+                        if (x + offset < w) {
+                            const rightIdx = (y * w + (x + offset)) * 4;
+                            pixels[idx] = pixels[rightIdx];
+                        }
+                        if (x - offset >= 0) {
+                            const leftIdx = (y * w + (x - offset)) * 4;
+                            pixels[idx + 2] = pixels[leftIdx + 2];
+                        }
+                    }
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function applyNeonEffect(intensity) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+            
+            // Edge detection for neon outline
+            const w = canvas.width;
+            const h = canvas.height;
+            const edges = new Uint8Array(w * h);
+            
+            for (let y = 1; y < h - 1; y++) {
+                for (let x = 1; x < w - 1; x++) {
+                    const idx = (y * w + x) * 4;
+                    let gx = 0, gy = 0;
+                    
+                    for (let c = 0; c < 3; c++) {
+                        const top = pixels[((y - 1) * w + x) * 4 + c];
+                        const bottom = pixels[((y + 1) * w + x) * 4 + c];
+                        const left = pixels[(y * w + (x - 1)) * 4 + c];
+                        const right = pixels[(y * w + (x + 1)) * 4 + c];
+                        
+                        gx += right - left;
+                        gy += bottom - top;
+                    }
+                    
+                    const magnitude = Math.sqrt(gx * gx + gy * gy) / 3;
+                    edges[y * w + x] = magnitude > 30 ? 255 : 0;
+                }
+            }
+            
+            // Apply neon glow
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const idx = (y * w + x) * 4;
+                    if (edges[y * w + x] > 0) {
+                        const boost = intensity * 2;
+                        pixels[idx] = Math.min(255, pixels[idx] * (1 + boost));
+                        pixels[idx + 1] = Math.min(255, pixels[idx + 1] * (1 + boost));
+                        pixels[idx + 2] = Math.min(255, pixels[idx + 2] * (1 + boost * 1.5));
+                    }
+                }
+            }
+            
+            // Overall brightness boost for neon effect
+            const brightBoost = 1 + (intensity * 0.3);
+            for (let i = 0; i < pixels.length; i += 4) {
+                pixels[i] = Math.min(255, pixels[i] * brightBoost);
+                pixels[i + 1] = Math.min(255, pixels[i + 1] * brightBoost);
+                pixels[i + 2] = Math.min(255, pixels[i + 2] * brightBoost);
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function applyRGBBoost() {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+            
+            for (let i = 0; i < pixels.length; i += 4) {
+                pixels[i] = Math.min(255, Math.max(0, pixels[i] + currentRedBoost * 2));
+                pixels[i + 1] = Math.min(255, Math.max(0, pixels[i + 1] + currentGreenBoost * 2));
+                pixels[i + 2] = Math.min(255, Math.max(0, pixels[i + 2] + currentBlueBoost * 2));
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function applyWatermark() {
+            const text = document.getElementById('watermarkText').value;
+            if (!text) return;
+            
+            const size = parseInt(document.getElementById('watermarkSize').value);
+            const color = document.getElementById('watermarkColor').value;
+            const position = document.getElementById('watermarkPosition').value;
+            const opacity = parseInt(document.getElementById('watermarkOpacity').value) / 100;
+            
+            ctx.save();
+            ctx.font = `bold ${size}px Arial`;
+            ctx.fillStyle = color;
+            ctx.globalAlpha = opacity;
+            
+            const metrics = ctx.measureText(text);
+            const textWidth = metrics.width;
+            const textHeight = size;
+            
+            let x, y;
+            const padding = 20;
+            
+            switch(position) {
+                case 'bottomRight':
+                    x = canvas.width - textWidth - padding;
+                    y = canvas.height - padding;
+                    break;
+                case 'bottomLeft':
+                    x = padding;
+                    y = canvas.height - padding;
+                    break;
+                case 'topRight':
+                    x = canvas.width - textWidth - padding;
+                    y = textHeight + padding;
+                    break;
+                case 'topLeft':
+                    x = padding;
+                    y = textHeight + padding;
+                    break;
+                case 'center':
+                    x = (canvas.width - textWidth) / 2;
+                    y = canvas.height / 2;
+                    break;
+            }
+            
+            ctx.fillText(text, x, y);
+            ctx.restore();
+        }
+
+        function toggleWatermark() {
+            const controls = document.getElementById('watermarkControls');
+            const toggle = document.getElementById('watermarkToggle');
+            controls.style.display = toggle.checked ? 'grid' : 'none';
+            updateCanvas();
+        }
+
+        // Crop functionality
+        function toggleCropMode() {
+            cropMode = document.getElementById('cropToggle').checked;
+            canvas.style.cursor = cropMode ? 'crosshair' : 'default';
+            document.getElementById('cropBtn').style.display = cropMode ? 'inline-block' : 'none';
+            document.getElementById('cancelCropBtn').style.display = cropMode ? 'inline-block' : 'none';
+            
+            if (!cropMode) {
+                cropStart = null;
+                cropEnd = null;
+                updateCanvas();
+            }
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            if (!cropMode) return;
+            const rect = canvas.getBoundingClientRect();
+            cropStart = {
+                x: (e.clientX - rect.left) * (canvas.width / rect.width),
+                y: (e.clientY - rect.top) * (canvas.height / rect.height)
+            };
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!cropMode || !cropStart) return;
+            const rect = canvas.getBoundingClientRect();
+            cropEnd = {
+                x: (e.clientX - rect.left) * (canvas.width / rect.width),
+                y: (e.clientY - rect.top) * (canvas.height / rect.height)
+            };
+            updateCanvas();
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            if (!cropMode || !cropStart) return;
+            const rect = canvas.getBoundingClientRect();
+            cropEnd = {
+                x: (e.clientX - rect.left) * (canvas.width / rect.width),
+                y: (e.clientY - rect.top) * (canvas.height / rect.height)
+            };
+            updateCanvas();
+        });
+
+        function drawCropSelection() {
+            if (!cropStart || !cropEnd) return;
+            
+            ctx.save();
+            ctx.strokeStyle = '#8B0000';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([10, 5]);
+            
+            const x = Math.min(cropStart.x, cropEnd.x);
+            const y = Math.min(cropStart.y, cropEnd.y);
+            const width = Math.abs(cropEnd.x - cropStart.x);
+            const height = Math.abs(cropEnd.y - cropStart.y);
+            
+            ctx.strokeRect(x, y, width, height);
+            
+            // Darken outside area
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect(0, 0, canvas.width, y);
+            ctx.fillRect(0, y, x, height);
+            ctx.fillRect(x + width, y, canvas.width - (x + width), height);
+            ctx.fillRect(0, y + height, canvas.width, canvas.height - (y + height));
+            
+            ctx.restore();
+        }
+
+        function applyCrop() {
+            if (!cropStart || !cropEnd) {
+                alert('Selectează mai întâi zona de crop!');
+                return;
+            }
+            
+            const x = Math.min(cropStart.x, cropEnd.x);
+            const y = Math.min(cropStart.y, cropEnd.y);
+            const width = Math.abs(cropEnd.x - cropStart.x);
+            const height = Math.abs(cropEnd.y - cropStart.y);
+            
+            if (width < 10 || height < 10) {
+                alert('Zona selectată este prea mică!');
+                return;
+            }
+            
+            cropRect = { x, y, width, height };
+            cropMode = false;
+            document.getElementById('cropToggle').checked = false;
+            cropStart = null;
+            cropEnd = null;
+            toggleCropMode();
+            updateCanvas();
+        }
+
+        function cancelCrop() {
+            cropStart = null;
+            cropEnd = null;
+            cropRect = null;
+            cropMode = false;
+            document.getElementById('cropToggle').checked = false;
+            toggleCropMode();
+            updateCanvas();
+        }
+
         function applyPreset(preset) {
             const presets = {
-                gaming: { brightness: 110, contrast: 130, saturation: 140, sharpness: 30, cartoon: 0, vignette: 0 },
-                cinematic: { brightness: 90, contrast: 120, saturation: 80, sharpness: 10, cartoon: 0, vignette: 40 },
-                vibrant: { brightness: 105, contrast: 115, saturation: 160, sharpness: 40, cartoon: 0, vignette: 0 },
-                cool: { brightness: 100, contrast: 110, saturation: 90, sharpness: 20, cartoon: 0, vignette: 0 },
-                warm: { brightness: 105, contrast: 105, saturation: 120, sharpness: 15, cartoon: 0, vignette: 0 },
-                noir: { brightness: 95, contrast: 150, saturation: 0, sharpness: 50, cartoon: 0, vignette: 60 },
-                cartoon: { brightness: 110, contrast: 130, saturation: 150, sharpness: 0, cartoon: 80, vignette: 0 }
+                gaming: { brightness: 110, contrast: 130, saturation: 140, sharpness: 30, cartoon: 0, vignette: 0, blur: 0, glitch: 0, neon: 0, r: 0, g: 0, b: 0 },
+                cinematic: { brightness: 90, contrast: 120, saturation: 80, sharpness: 10, cartoon: 0, vignette: 40, blur: 0, glitch: 0, neon: 0, r: 0, g: 0, b: 0 },
+                vibrant: { brightness: 105, contrast: 115, saturation: 160, sharpness: 40, cartoon: 0, vignette: 0, blur: 0, glitch: 0, neon: 0, r: 0, g: 0, b: 0 },
+                cool: { brightness: 100, contrast: 110, saturation: 90, sharpness: 20, cartoon: 0, vignette: 0, blur: 0, glitch: 0, neon: 0, r: -10, g: 0, b: 15 },
+                warm: { brightness: 105, contrast: 105, saturation: 120, sharpness: 15, cartoon: 0, vignette: 0, blur: 0, glitch: 0, neon: 0, r: 15, g: 5, b: -10 },
+                noir: { brightness: 95, contrast: 150, saturation: 0, sharpness: 50, cartoon: 0, vignette: 60, blur: 0, glitch: 0, neon: 0, r: 0, g: 0, b: 0 },
+                cartoon: { brightness: 110, contrast: 130, saturation: 150, sharpness: 0, cartoon: 80, vignette: 0, blur: 0, glitch: 0, neon: 0, r: 0, g: 0, b: 0 },
+                retro: { brightness: 95, contrast: 110, saturation: 120, sharpness: 0, cartoon: 0, vignette: 30 },
+                glitch: { brightness: 110, contrast: 120, saturation: 130, sharpness: 0, cartoon: 0, vignette: 0, blur: 0, glitch: 70, neon: 0, r: 20, g: -10, b: 20 },
+                neon: { brightness: 115, contrast: 125, saturation: 170, sharpness: 20, cartoon: 0, vignette: 20, blur: 0, glitch: 0, neon: 80, r: 10, g: 15, b: 25 },
+                rgb: { brightness: 110, contrast: 120, saturation: 150, sharpness: 30, cartoon: 0, vignette: 0, blur: 0, glitch: 0, neon: 0, r: 25, g: 25, b: 25 }
             };
 
             const values = presets[preset];
@@ -575,6 +1150,12 @@
             currentSharpness = values.sharpness;
             currentCartoon = values.cartoon;
             currentVignette = values.vignette;
+            currentBlur = values.blur;
+            currentGlitch = values.glitch;
+            currentNeon = values.neon;
+            currentRedBoost = values.r;
+            currentGreenBoost = values.g;
+            currentBlueBoost = values.b;
 
             document.getElementById('brightness').value = values.brightness;
             document.getElementById('contrast').value = values.contrast;
@@ -582,6 +1163,12 @@
             document.getElementById('sharpness').value = values.sharpness;
             document.getElementById('cartoon').value = values.cartoon;
             document.getElementById('vignette').value = values.vignette;
+            document.getElementById('blur').value = values.blur;
+            document.getElementById('glitch').value = values.glitch;
+            document.getElementById('neon').value = values.neon;
+            document.getElementById('redBoost').value = values.r;
+            document.getElementById('greenBoost').value = values.g;
+            document.getElementById('blueBoost').value = values.b;
 
             document.getElementById('brightnessValue').textContent = values.brightness + '%';
             document.getElementById('contrastValue').textContent = values.contrast + '%';
@@ -589,12 +1176,19 @@
             document.getElementById('sharpnessValue').textContent = values.sharpness;
             document.getElementById('cartoonValue').textContent = values.cartoon;
             document.getElementById('vignetteValue').textContent = values.vignette;
+            document.getElementById('blurValue').textContent = values.blur;
+            document.getElementById('glitchValue').textContent = values.glitch;
+            document.getElementById('neonValue').textContent = values.neon;
+            document.getElementById('redBoostValue').textContent = values.r;
+            document.getElementById('greenBoostValue').textContent = values.g;
+            document.getElementById('blueBoostValue').textContent = values.b;
 
             updateCanvas();
         }
 
         function resetFilters() {
             resetToOriginal();
+            cropRect = null;
             updateCanvas();
         }
 
@@ -653,6 +1247,7 @@
                 const newImg = new Image();
                 newImg.onload = () => {
                     originalImage = newImg;
+                    cropRect = null;
                     resetToOriginal();
                     updateCanvas();
                 };
