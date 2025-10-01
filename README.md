@@ -7,7 +7,8 @@
 
 Un editor de imagini web simplu și puternic, optimizat pentru editarea setup-urilor gaming cu RGB lighting. Interfață modernă cu temă dark (roșu, alb, negru) și funcții avansate de editare.
 
-![Gaming Image Editor](img/Screenshot.png),(img/Screenshot2.png).
+![Gaming Image Editor](img/Screenshot.png)
+![Gaming Image Editor](img/Screenshot2.png)
 
 ## ✨ Caracteristici
 
@@ -159,3 +160,4 @@ Pentru bug-uri, sugestii sau întrebări, deschide un Issue pe GitHub.
 
 
 🎮 Perfect pentru streameri, YouTuberi și gaming enthusiasts! 🎮
+
