@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -31,19 +31,32 @@
             text-align: center;
             margin-bottom: 30px;
             font-size: 2.5em;
-            background: linear-gradient(90deg, #00d4ff, #ff00ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        h1 .logo {
+            font-size: 1.2em;
+            filter: none;
+        }
+
+        h1 .title-text {
+            background: linear-gradient(90deg, #8B0000, #ffffff, #8B0000);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.6));
         }
 
         .controls {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(20, 20, 20, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(139, 0, 0, 0.4);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.15);
         }
 
         .control-group {
@@ -54,14 +67,14 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #00d4ff;
+            color: #8B0000;
         }
 
         input[type="range"] {
             width: 100%;
             height: 6px;
             border-radius: 5px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(50, 50, 50, 0.8);
             outline: none;
             -webkit-appearance: none;
         }
@@ -72,25 +85,26 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #00d4ff, #ff00ff);
+            background: linear-gradient(135deg, #8B0000, #660000);
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            box-shadow: 0 0 8px rgba(139, 0, 0, 0.6);
         }
 
         input[type="range"]::-moz-range-thumb {
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #00d4ff, #ff00ff);
+            background: linear-gradient(135deg, #8B0000, #660000);
             cursor: pointer;
             border: none;
+            box-shadow: 0 0 8px rgba(139, 0, 0, 0.6);
         }
 
         .value-display {
             display: inline-block;
             margin-left: 10px;
             font-weight: bold;
-            color: #ff00ff;
+            color: #ffffff;
         }
 
         .buttons {
@@ -107,48 +121,89 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            background: linear-gradient(135deg, #8B0000, #660000);
             color: white;
             font-size: 1em;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
         }
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+            box-shadow: 0 6px 25px rgba(139, 0, 0, 0.6);
         }
 
         button.download {
-            background: linear-gradient(135deg, #ff00ff, #cc00cc);
+            background: linear-gradient(135deg, #e0e0e0, #999999);
+            color: #000;
+            box-shadow: 0 4px 15px rgba(200, 200, 200, 0.3);
         }
 
         button.download:hover {
-            box-shadow: 0 5px 20px rgba(255, 0, 255, 0.4);
+            box-shadow: 0 6px 25px rgba(200, 200, 200, 0.5);
         }
 
         button.reset {
-            background: linear-gradient(135deg, #ff4444, #cc0000);
+            background: linear-gradient(135deg, #1a1a1a, #000000);
+            border: 2px solid #8B0000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
         button.reset:hover {
-            box-shadow: 0 5px 20px rgba(255, 68, 68, 0.4);
+            box-shadow: 0 6px 25px rgba(139, 0, 0, 0.5);
+            border-color: #A52A2A;
+        }
+
+        .upload-section {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .upload-header {
+            font-size: 0.9em;
+            color: #8B0000;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .upload-btn {
+            padding: 12px 32px;
+            font-size: 1em;
+            background: linear-gradient(135deg, #8B0000, #660000);
+            margin-bottom: 0;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.4);
+        }
+
+        .upload-btn:hover {
+            box-shadow: 0 6px 25px rgba(139, 0, 0, 0.6);
+        }
+
+        .upload-hint {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.75em;
+            margin-top: 8px;
         }
 
         .canvas-container {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 15px;
             padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.2);
             min-height: 500px;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
         }
 
         canvas {
             max-width: 100%;
             height: auto;
             border-radius: 10px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 40px rgba(139, 0, 0, 0.4);
         }
 
         .filter-buttons {
@@ -166,7 +221,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎮 Gaming Setup Editor</h1>
+        <h1>
+            <img src="img/logo.png" alt="Logo" class="logo" style="height: 60px; width: auto;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+            <span class="logo" style="display: none;">🎮</span>
+            <span class="title-text">Gaming Setup Editor</span>
+        </h1>
         
         <div class="controls">
             <div class="control-group">
@@ -195,6 +254,16 @@
             </div>
 
             <div class="control-group">
+                <label>Efect Cartoon: <span class="value-display" id="cartoonValue">0</span></label>
+                <input type="range" id="cartoon" min="0" max="100" value="0" step="1">
+            </div>
+
+            <div class="control-group">
+                <label>Vignette: <span class="value-display" id="vignetteValue">0</span></label>
+                <input type="range" id="vignette" min="0" max="100" value="0" step="1">
+            </div>
+
+            <div class="control-group">
                 <label>Filtre Predefinite:</label>
                 <div class="filter-buttons">
                     <button onclick="applyPreset('gaming')">Gaming</button>
@@ -203,12 +272,22 @@
                     <button onclick="applyPreset('cool')">Cool</button>
                     <button onclick="applyPreset('warm')">Warm</button>
                     <button onclick="applyPreset('noir')">Noir</button>
+                    <button onclick="applyPreset('cartoon')">Cartoon</button>
                 </div>
             </div>
 
             <div class="buttons">
-                <button class="reset" onclick="resetFilters()">Resetează</button>
+                <button class="reset" onclick="resetFilters()">⚫ Resetează</button>
                 <button class="download" onclick="downloadImage()">⬇ Descarcă (1920x1080)</button>
+            </div>
+
+            <div class="upload-section">
+                <div class="upload-header">📁 Încarcă Imaginea Ta</div>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    Alege Fișier
+                </button>
+                <p class="upload-hint">sau apasă Ctrl+V pentru a lipi o imagine</p>
             </div>
         </div>
 
@@ -228,10 +307,14 @@
         let currentContrast = 100;
         let currentSaturation = 100;
         let currentSharpness = 0;
+        let currentCartoon = 0;
+        let currentVignette = 0;
 
         // Load the image
         img.onload = function() {
             originalImage = img;
+            // Reset la valorile originale când se încarcă o imagine nouă
+            resetToOriginal();
             updateCanvas();
         };
         
@@ -268,6 +351,44 @@
             updateCanvas();
         });
 
+        document.getElementById('cartoon').addEventListener('input', (e) => {
+            currentCartoon = parseInt(e.target.value);
+            document.getElementById('cartoonValue').textContent = currentCartoon;
+            updateCanvas();
+        });
+
+        document.getElementById('vignette').addEventListener('input', (e) => {
+            currentVignette = parseInt(e.target.value);
+            document.getElementById('vignetteValue').textContent = currentVignette;
+            updateCanvas();
+        });
+
+        function resetToOriginal() {
+            currentRotation = -90;
+            currentBrightness = 100;
+            currentContrast = 100;
+            currentSaturation = 100;
+            currentSharpness = 0;
+            currentCartoon = 0;
+            currentVignette = 0;
+
+            document.getElementById('rotation').value = -90;
+            document.getElementById('brightness').value = 100;
+            document.getElementById('contrast').value = 100;
+            document.getElementById('saturation').value = 100;
+            document.getElementById('sharpness').value = 0;
+            document.getElementById('cartoon').value = 0;
+            document.getElementById('vignette').value = 0;
+
+            document.getElementById('rotationValue').textContent = '-90°';
+            document.getElementById('brightnessValue').textContent = '100%';
+            document.getElementById('contrastValue').textContent = '100%';
+            document.getElementById('saturationValue').textContent = '100%';
+            document.getElementById('sharpnessValue').textContent = '0';
+            document.getElementById('cartoonValue').textContent = '0';
+            document.getElementById('vignetteValue').textContent = '0';
+        }
+
         function updateCanvas() {
             if (!originalImage) return;
 
@@ -297,6 +418,14 @@
 
             if (currentSharpness > 0) {
                 applySharpness(currentSharpness / 100);
+            }
+
+            if (currentCartoon > 0) {
+                applyCartoonEffect(currentCartoon / 100);
+            }
+
+            if (currentVignette > 0) {
+                applyVignette(currentVignette / 100);
             }
         }
 
@@ -337,14 +466,106 @@
             ctx.putImageData(output, 0, 0);
         }
 
+        function applyCartoonEffect(intensity) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+            
+            // Quantize colors pentru efect cartoon
+            const levels = Math.max(2, Math.floor(8 - intensity * 5));
+            const factor = 255 / levels;
+            
+            for (let i = 0; i < pixels.length; i += 4) {
+                pixels[i] = Math.round(pixels[i] / factor) * factor;     // R
+                pixels[i + 1] = Math.round(pixels[i + 1] / factor) * factor; // G
+                pixels[i + 2] = Math.round(pixels[i + 2] / factor) * factor; // B
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+            
+            // Edge detection pentru contur
+            if (intensity > 0.3) {
+                applyEdgeDetection(intensity);
+            }
+        }
+
+        function applyEdgeDetection(intensity) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+            const w = canvas.width;
+            const h = canvas.height;
+            const output = ctx.createImageData(w, h);
+            const outputPixels = output.data;
+            
+            const threshold = 50 * intensity;
+            
+            for (let y = 1; y < h - 1; y++) {
+                for (let x = 1; x < w - 1; x++) {
+                    const idx = (y * w + x) * 4;
+                    
+                    let gx = 0, gy = 0;
+                    for (let c = 0; c < 3; c++) {
+                        const top = pixels[((y - 1) * w + x) * 4 + c];
+                        const bottom = pixels[((y + 1) * w + x) * 4 + c];
+                        const left = pixels[(y * w + (x - 1)) * 4 + c];
+                        const right = pixels[(y * w + (x + 1)) * 4 + c];
+                        
+                        gx += (right - left);
+                        gy += (bottom - top);
+                    }
+                    
+                    const magnitude = Math.sqrt(gx * gx + gy * gy) / 3;
+                    
+                    if (magnitude > threshold) {
+                        outputPixels[idx] = 0;
+                        outputPixels[idx + 1] = 0;
+                        outputPixels[idx + 2] = 0;
+                    } else {
+                        outputPixels[idx] = pixels[idx];
+                        outputPixels[idx + 1] = pixels[idx + 1];
+                        outputPixels[idx + 2] = pixels[idx + 2];
+                    }
+                    outputPixels[idx + 3] = 255;
+                }
+            }
+            
+            ctx.putImageData(output, 0, 0);
+        }
+
+        function applyVignette(intensity) {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+            const w = canvas.width;
+            const h = canvas.height;
+            const centerX = w / 2;
+            const centerY = h / 2;
+            const maxDist = Math.sqrt(centerX * centerX + centerY * centerY);
+            
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const idx = (y * w + x) * 4;
+                    const dx = x - centerX;
+                    const dy = y - centerY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const vignette = 1 - (dist / maxDist) * intensity;
+                    
+                    pixels[idx] *= vignette;     // R
+                    pixels[idx + 1] *= vignette; // G
+                    pixels[idx + 2] *= vignette; // B
+                }
+            }
+            
+            ctx.putImageData(imageData, 0, 0);
+        }
+
         function applyPreset(preset) {
             const presets = {
-                gaming: { brightness: 110, contrast: 130, saturation: 140, sharpness: 30 },
-                cinematic: { brightness: 90, contrast: 120, saturation: 80, sharpness: 10 },
-                vibrant: { brightness: 105, contrast: 115, saturation: 160, sharpness: 40 },
-                cool: { brightness: 100, contrast: 110, saturation: 90, sharpness: 20 },
-                warm: { brightness: 105, contrast: 105, saturation: 120, sharpness: 15 },
-                noir: { brightness: 95, contrast: 150, saturation: 0, sharpness: 50 }
+                gaming: { brightness: 110, contrast: 130, saturation: 140, sharpness: 30, cartoon: 0, vignette: 0 },
+                cinematic: { brightness: 90, contrast: 120, saturation: 80, sharpness: 10, cartoon: 0, vignette: 40 },
+                vibrant: { brightness: 105, contrast: 115, saturation: 160, sharpness: 40, cartoon: 0, vignette: 0 },
+                cool: { brightness: 100, contrast: 110, saturation: 90, sharpness: 20, cartoon: 0, vignette: 0 },
+                warm: { brightness: 105, contrast: 105, saturation: 120, sharpness: 15, cartoon: 0, vignette: 0 },
+                noir: { brightness: 95, contrast: 150, saturation: 0, sharpness: 50, cartoon: 0, vignette: 60 },
+                cartoon: { brightness: 110, contrast: 130, saturation: 150, sharpness: 0, cartoon: 80, vignette: 0 }
             };
 
             const values = presets[preset];
@@ -352,39 +573,28 @@
             currentContrast = values.contrast;
             currentSaturation = values.saturation;
             currentSharpness = values.sharpness;
+            currentCartoon = values.cartoon;
+            currentVignette = values.vignette;
 
             document.getElementById('brightness').value = values.brightness;
             document.getElementById('contrast').value = values.contrast;
             document.getElementById('saturation').value = values.saturation;
             document.getElementById('sharpness').value = values.sharpness;
+            document.getElementById('cartoon').value = values.cartoon;
+            document.getElementById('vignette').value = values.vignette;
 
             document.getElementById('brightnessValue').textContent = values.brightness + '%';
             document.getElementById('contrastValue').textContent = values.contrast + '%';
             document.getElementById('saturationValue').textContent = values.saturation + '%';
             document.getElementById('sharpnessValue').textContent = values.sharpness;
+            document.getElementById('cartoonValue').textContent = values.cartoon;
+            document.getElementById('vignetteValue').textContent = values.vignette;
 
             updateCanvas();
         }
 
         function resetFilters() {
-            currentRotation = -90;
-            currentBrightness = 100;
-            currentContrast = 100;
-            currentSaturation = 100;
-            currentSharpness = 0;
-
-            document.getElementById('rotation').value = -90;
-            document.getElementById('brightness').value = 100;
-            document.getElementById('contrast').value = 100;
-            document.getElementById('saturation').value = 100;
-            document.getElementById('sharpness').value = 0;
-
-            document.getElementById('rotationValue').textContent = '-90°';
-            document.getElementById('brightnessValue').textContent = '100%';
-            document.getElementById('contrastValue').textContent = '100%';
-            document.getElementById('saturationValue').textContent = '100%';
-            document.getElementById('sharpnessValue').textContent = '0';
-
+            resetToOriginal();
             updateCanvas();
         }
 
@@ -424,19 +634,32 @@
             for (let item of items) {
                 if (item.type.indexOf('image') !== -1) {
                     const blob = item.getAsFile();
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        const newImg = new Image();
-                        newImg.onload = () => {
-                            originalImage = newImg;
-                            updateCanvas();
-                        };
-                        newImg.src = event.target.result;
-                    };
-                    reader.readAsDataURL(blob);
+                    loadImageFromFile(blob);
                 }
             }
         });
+
+        // Handle file upload
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                loadImageFromFile(file);
+            }
+        });
+
+        function loadImageFromFile(file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const newImg = new Image();
+                newImg.onload = () => {
+                    originalImage = newImg;
+                    resetToOriginal();
+                    updateCanvas();
+                };
+                newImg.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
     </script>
 </body>
 </html>
